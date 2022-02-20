@@ -1,5 +1,7 @@
 package com.product.myretail.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Utility API", description = "Utility endpoints for demo ")
 @RestController
 public class UtilityController {
-	
+	private static final Logger log = LoggerFactory.getLogger(UtilityController.class);
 	@Autowired
 	MyRetailService myRetailService;
 
@@ -29,6 +31,7 @@ public class UtilityController {
 	 @Operation(summary = "Get Cache Information for a tcin")
     @ApiResponse(code = 200, message = "OK")
 	ResponseEntity<MyRetailProduct> getProductData(@PathVariable long id, @RequestParam(defaultValue="USD") String currencyCode) {
+		log.info("UtilityController:: getProductData :: Product ID from the request " + id + currencyCode);
 		MyRetailProduct result = new MyRetailProduct();
 
 		result = myRetailService.getCacheData(id,currencyCode);

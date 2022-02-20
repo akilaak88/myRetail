@@ -56,5 +56,13 @@ public class ProductPriceRequest {
 		this.createUser = createUser;
 	}
 
+	public ProductPriceRequest(long id, double price, String currencyCode, String createUser) {
+		super();
+		this.id = id;
+		this.price = price;
+		this.currencyCode = currencyCode;
+		this.createUser = createUser;
+	}
+
 	
 }
