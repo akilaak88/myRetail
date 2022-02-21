@@ -2,6 +2,7 @@
 - Fetch the product details using Product ID
 - Product details are fetched from External API and product title is retrieved
 - Pricing information is fetched from Cassandra Database
+- Fetch response is cached for quick retrivel
 - UpSert (Update/Insert) product pricing information from the request by product id and currency code
 
 # Development
