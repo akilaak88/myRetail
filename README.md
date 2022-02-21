@@ -25,17 +25,18 @@ Application will be accessible in localhost:8080
 
 # How to use it
 # Fetch Products
-This service will take the product id as path parameter, Currency code as optional parameter. If no Currency Code,"USD" will be taken by default. This api will call 
+This service will take the product id as path parameter, Currency code as optional parameter. If no Currency Code,"USD" will be taken by default. Validations on the input fields will be done and  will call then
 external API to fetch product information, Price information of that product will be fetched from Cassandra which will then be combined to a single response. This response will then be updated in In-Memory cache for faster accessing.
 ![image](https://user-images.githubusercontent.com/46640172/154864698-77609ca2-72eb-4371-8907-8266f375f220.png)
 
 
 # Upsert Price Information
 
-This service will take the product id, value(price of the product), currencyCode, createUser as input payload and update the Information in Cassandra Table.
+This service will take the product id, value(price of the product), currencyCode, createUser as input payload, validte the request and update the Information in Cassandra Table.
 If the Product is alreeady available in Cache, Cache Information will be evicted.
 
-![image](https://user-images.githubusercontent.com/46640172/154864519-c5c378c3-bcfa-4d58-9d8f-1dd92d8f7500.png)
+![image](https://user-images.githubusercontent.com/46640172/154884501-ed63ef35-e45c-466e-8f36-f6bc9c51d0e4.png)
+
 
 # Utility API (For Demo Purpose)
 
