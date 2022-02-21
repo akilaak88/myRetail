@@ -1,8 +1,8 @@
 # MyRetail App
 - Fetch the product details using Product ID
-- Product details are fetched from External APIand product title is retrieved from it
-- Price Information are fetched from Cassandra Database
-- Modify the product price information by taking the product id and price details.
+- Product details are fetched from External API and product title is retrieved
+- Pricing information is fetched from Cassandra Database
+- UpSert (Update/Insert) product pricing information from the request by product id and currency code
 
 # Development
 Java 8+, Spring Boot 2.6.0 ,Cassandra 4.0.2, Apache Maven 3.8.4 for build, Swagger Open Api for accessing Rest Services, Tableplus or any IDE of your Choice for cassandra(Optional)
@@ -40,10 +40,10 @@ If the Product is alreeady available in Cache, Cache Information will be evicted
 
 # Utility API (For Demo Purpose)
 
-Utility API is available is see the product Information available in Cache after fetching the information from external API and cassandra db
+Utility API is available to view the product information from Cache after fetching the response from external API and cassandra db
 
 # Table Structure for Cassandra
-Cassandra table to upsert/retrieve pricing information is created with the following structure(Keyspace - myretail)
+Cassandra table "to upsert/retrieve pricing information" is created with the following structure (Keyspace - myretail)
 
 CREATE TABLE myretail.PRODUCT_PRICE
   (tcin BIGINT, 
