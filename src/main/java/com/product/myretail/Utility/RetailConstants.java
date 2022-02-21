@@ -3,6 +3,7 @@ package com.product.myretail.Utility;
 public enum RetailConstants {
 	
 	DEFAULT_EXCEPTION ("5000","Error while fetching Product Information. Please try after sometime."),
+	PRODUCT_PRICE_NOT_AVAILABLE("5001", "Product Price is Not Available"),
 	PRODUCT_ID_VALIDATION_EXCEPTION("4000", "Invalid Product ID"),
 	PRODUCT_NAME_NOT_FOUND_EXCEPTION("4001", "Unable to find Product Name"),
 	PRODUCT_PRICE_NOT_FOUND_EXCEPTION("4002", "Unable to find Product Price"),

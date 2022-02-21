@@ -27,6 +27,15 @@ public class UtilityController {
 	@Autowired
 	MyRetailService myRetailService;
 
+	
+	/**
+	 * This method used to get the product details from cache for a given Product Id and Currency Code
+	 * This is only for demo Purpose
+	 *
+	 * This method accept 2 parameters
+	 * Id 
+	 * Currency Code 
+	 */
 	@RequestMapping(value = "/cache/{id}", method = RequestMethod.GET)
 	 @Operation(summary = "Get Cache Information for a tcin")
     @ApiResponse(code = 200, message = "OK")

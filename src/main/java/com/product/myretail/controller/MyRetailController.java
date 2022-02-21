@@ -37,6 +37,18 @@ public class MyRetailController {
 	@Autowired
 	MyRetailService myRetailService;
 
+	/**
+	 * This method used to get the product details (name and price) from two different sources 
+	 * for given product id. 
+	 * It fetches the information, consolidate the response , Stores the value in cache and returns it.
+	 * it validates whether the input product id is valid - > 0 before processing the request,
+	 * and throws exception with proper httpstatus code is being set
+	 *
+	 * This method accept 2 parameters
+	 * Id - Mandatory Parameter to be passed
+	 * Currency Code - Optional (USD will be default value)
+	 */
+	
 	@RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
 	@Operation(summary = "Get Product by id/tcin")
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "OK"), @ApiResponse(code = 400, message = "Bad Request")})
@@ -47,6 +59,10 @@ public class MyRetailController {
 		try {
 			if (ValidationUtil.isValidProductId(id)) {
 				result = myRetailService.getProductDetail(id, currencyCode);
+				if(result.getCurrentPrice() == null)
+					return ResponseEntity
+				            .status(HttpStatus.BAD_REQUEST)
+				            .body(new MyRetailErrorResponse(RetailConstants.PRODUCT_PRICE_NOT_AVAILABLE.getCode(),RetailConstants.PRODUCT_PRICE_NOT_AVAILABLE.getDescription()));
 			}
 			else {
 				return ResponseEntity
@@ -63,6 +79,14 @@ public class MyRetailController {
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 
 	}
+	
+	/**
+	 * This method will modify the price information of a product. It also checks for the valid
+	 * product id, price information is present and return success /error message. 
+	 * In case of error, there will be an error Code and a message that will be available in the response
+	 * @param ProductPriceRequest
+	 * @return
+	 */
 	
 	@RequestMapping(value = "/product", method = RequestMethod.PUT)
 	@Operation(summary = "UpSert Product Price Information for an id/tcin ")
@@ -89,6 +113,13 @@ public class MyRetailController {
 	            .body(new MyRetailErrorResponse(RetailConstants.PRODUCT_UPDATE_SUCCESSFUL.getCode(),RetailConstants.PRODUCT_UPDATE_SUCCESSFUL.getDescription()));
 	  
 	  }
+	
+	/**
+	 * This method is created to evaluate the product Information in the request and set 
+	 * appropriate message in the response object
+	 * @param ProductPriceRequest
+	 * @param MyRetailErrorResponse
+	 */
 	
 	MyRetailErrorResponse checkValidProductPriceRequest(ProductPriceRequest productPriceRequest) {
 		if(!ValidationUtil.isValidProductId(productPriceRequest.getId())) {

@@ -49,10 +49,11 @@ public class MyRetailServiceImpl implements MyRetailService {
 		MyRetailProduct response = new MyRetailProduct();
 
 		response = fetchProductDetailsFromApi(productId);
-
 		CurrentPrice currentPrice = myRetailDao.getProductPrice(productId, currencyCode);
-		response.setCurrentPrice(currentPrice);
-
+		if(currentPrice.getValue() > 0)
+			response.setCurrentPrice(currentPrice);
+		else
+			response.setCurrentPrice(null);
 		return response;
 	}
 
@@ -67,8 +68,7 @@ public class MyRetailServiceImpl implements MyRetailService {
 		String uri = productApiURL.concat(String.valueOf(productId));
 		log.info("URL {}", uri);
 		String apiResponse = restTemplate.getForObject(uri, String.class);
-		TypeReference<JSONObject> typeReference = new TypeReference<JSONObject>() {
-		};
+		TypeReference<JSONObject> typeReference = new TypeReference<JSONObject>() {};
 		try {
 			JSONObject json = mapper.readValue(apiResponse, typeReference);
 			JsonObject jsonNode = new Gson().fromJson(json.toString(), JsonObject.class);

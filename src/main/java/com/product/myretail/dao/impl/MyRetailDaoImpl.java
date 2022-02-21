@@ -27,23 +27,24 @@ public class MyRetailDaoImpl implements MyRetailDao {
 	@Autowired
 	Session session;
 	
-	PreparedStatement getPreparedStatement;
-	PreparedStatement updatePreparedStatement;
 	
-	@PostConstruct
-	void setup() {
-		getPreparedStatement = session.prepare("select * from myretail.product_price where tcin = ? and currency_code = ?");
-		updatePreparedStatement = session.prepare("insert into myretail.PRODUCT_PRICE(tcin,price,currency_code,create_user, create_ts) values (?,?,?,?, dateof(now()))");
-	}
+	  PreparedStatement getPreparedStatement; 
+	  PreparedStatement updatePreparedStatement;
+	  
+	  @PostConstruct void setup() { 
+		  getPreparedStatement = session.prepare("select * from myretail.product_price where tcin = ? and currency_code = ?"); 
+		  updatePreparedStatement = session.prepare("insert into myretail.PRODUCT_PRICE(tcin,price,currency_code,create_user, create_ts) values (?,?,?,?, dateof(now()))"); 
+	  }
+	 
 
 	@Override
 	public CurrentPrice getProductPrice(long productId, String currencyCode) {
+		//PreparedStatement getPreparedStatement = session.prepare("select * from myretail.product_price where tcin = ? and currency_code = ?");
 				
 		CurrentPrice currentPrice = new CurrentPrice();
 		try {
 			BoundStatement bound = getPreparedStatement.bind(productId,currencyCode);
 			ResultSet result = session.execute(bound);
-			System.out.println(result!=null);
 			if(result!=null)  {
 				for (Row row : result) {
 				currentPrice.setValue(row.getDouble("price"));
@@ -61,6 +62,7 @@ public class MyRetailDaoImpl implements MyRetailDao {
 
 	@Override
 	public void updateProductPrice(ProductPriceRequest productPriceRequest) throws MyRetailException {
+		//PreparedStatement updatePreparedStatement = session.prepare("insert into myretail.PRODUCT_PRICE(tcin,price,currency_code,create_user, create_ts) values (?,?,?,?, dateof(now()))");
 		try {
 			
 			BoundStatement bound = updatePreparedStatement.bind(productPriceRequest.getId(),
